@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
+const config = require('./config');
 const app = express();
 
 const salt = bcrypt.genSaltSync(10);
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect('mongodb-connection-string-goes-here');
+mongoose.connect(config.connectionString);
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
